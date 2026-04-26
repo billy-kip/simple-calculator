@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0e0e0e;
+  --surface: #1a1a1a;
+  --btn-num: #222222;
+  --btn-util: #2e2e2e;
+  --btn-op: #e8a020;
+  --btn-op-hover: #ffb733;
+  --btn-active: #fff;
+  --text-primary: #f5f5f5;
+  --text-dim: #888;
+  --text-op: #fff;
+  --accent: #e8a020;
+  --radius: 20px;
+  --btn-radius: 14px;
+  --gap: 12px;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(232, 160, 32, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(232, 160, 32, 0.04) 0%, transparent 60%);
+}
+
+.calculator {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 28px 24px 24px;
+  width: 340px;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,255,255,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.07);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+/* Display */
+.display {
+  background: #111;
+  border-radius: 12px;
+  padding: 20px 20px 16px;
+  margin-bottom: 20px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 6px;
+  border: 1px solid rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+
+.expression {
+  font-size: 14px;
+  color: var(--text-dim);
+  min-height: 20px;
+  text-align: right;
+  word-break: break-all;
+  transition: all 0.2s ease;
+}
+
+.result {
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1;
+  text-align: right;
+  word-break: break-all;
+  transition: all 0.15s ease;
+  letter-spacing: -2px;
+}
+
+.result.pop {
+  transform: scale(1.04);
+}
+
+/* Button grid */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.btn {
+  border: none;
+  border-radius: var(--btn-radius);
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.12s ease,
+    transform 0.1s ease,
+    box-shadow 0.12s ease;
+  position: relative;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.93);
+}
+
+.btn.num {
+  background: var(--btn-num);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.btn.num:hover {
+  background: #2c2c2c;
+}
+
+.btn.util {
+  background: var(--btn-util);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.btn.util:hover {
+  background: #3a3a3a;
+}
+
+.btn.op {
+  background: var(--btn-op);
+  color: var(--text-op);
+  font-size: 22px;
+  box-shadow: 0 4px 16px rgba(232, 160, 32, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.btn.op:hover {
+  background: var(--btn-op-hover);
+  box-shadow: 0 6px 20px rgba(232, 160, 32, 0.5);
+}
+
+.btn.op.active-op {
+  background: #fff;
+  color: var(--btn-op);
+}
+
+.btn.eq {
+  background: var(--btn-op);
+}
+
+.btn.wide {
+  grid-column: span 2;
+  justify-content: flex-start;
+  padding-left: 26px;
+}
+
+/* Ripple effect */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn:active::after {
+  opacity: 0.08;
+  transition: none;
+}
+
+@media (max-width: 380px) {
+  .calculator { width: 95vw; padding: 20px 16px 16px; }
+  .btn { height: 60px; font-size: 16px; }
+  .result { font-size: 40px; }
+}
